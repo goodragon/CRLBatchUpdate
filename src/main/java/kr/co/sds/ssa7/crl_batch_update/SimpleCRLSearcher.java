@@ -4,7 +4,7 @@ package kr.co.sds.ssa7.crl_batch_update;
  * Hello world!
  *
  */
-public class App 
+public class SimpleCRLSearcher 
 {
     public static void main( String[] args )
     {
