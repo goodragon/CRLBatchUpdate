@@ -8,9 +8,13 @@ public class SimpleCRLSearcherClient {
     {
     	long startTime = System.currentTimeMillis();
 
-    	// TradeSign Test
-    	SimpleCRLSearcher crlSearcher = new SimpleCRLSearcher(".*o=TradeSign.*", "ldap.tradesign.net");
-    	crlSearcher.updateCRL();
+    	SimpleCRLSearcher simpleCRLSearcher = new SimpleCRLSearcher();
+    	
+    	//TradeSign Test
+    	simpleCRLSearcher.setCRLFileList(".*o=yessign.*");
+    	simpleCRLSearcher.setInitialDirContext("ds.yessign.or.kr");
+		
+		simpleCRLSearcher.updateCRL();
 
     	long endTime = System.currentTimeMillis();
     	

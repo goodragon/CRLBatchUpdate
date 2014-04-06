@@ -20,22 +20,24 @@ import javax.naming.directory.SearchResult;
 
 public class SimpleCRLSearcher 
 {
-	String regexPattern;
-	String url;
+	final String OLD_CRL_DIR = "D:/CRL/OldCRL/";
+	final String NEW_CRL_DIR = "D:/CRL/NewCRL/";
+	
 	DirContext dirContext;
 	String[] crlFileList;
-	SearchControls searcher;
 	
-	public SimpleCRLSearcher(String regexPattern, String url) {
-		this.regexPattern = regexPattern;
-		this.url = url;
-		setDirContext();
-		setCRLFileList();
-		searcher = new SearchControls();
-		searcher.setSearchScope(SearchControls.OBJECT_SCOPE);
+	public void setCRLFileList(final String regexPattern) {
+		crlFileList = new File(OLD_CRL_DIR).list(
+				new FilenameFilter(){
+			Pattern pattern = Pattern.compile(regexPattern);
+			
+			public boolean accept(File arg0, String filename) {
+				return pattern.matcher(filename).matches();
+			}
+		});
 	}
 	
-	private void setDirContext() {
+	public void setInitialDirContext(String url) {
     	String path = String.format("LDAP://%s/", url);
     	Hashtable<String, String> properties = new Hashtable<String, String>();
 		properties.put(Context.INITIAL_CONTEXT_FACTORY,
@@ -49,17 +51,6 @@ public class SimpleCRLSearcher
 		}
 	}
 	
-	private void setCRLFileList() {
-		crlFileList = new File("D:/CRL/OldCRL").list(
-				new FilenameFilter(){
-			Pattern pattern = Pattern.compile(regexPattern);
-			
-			public boolean accept(File arg0, String filename) {
-				return pattern.matcher(filename).matches();
-			}
-		});
-	}
-	
     public void updateCRL() {
 
     	for(String crlFileName : crlFileList) {
@@ -68,27 +59,31 @@ public class SimpleCRLSearcher
 	}
 	
     private void saveNewCRL(byte[] crlbyte, String newCRLFileName) {
-		OutputStream os = null;
-		try {
-			os = new BufferedOutputStream(
-					new FileOutputStream("D:/CRL/NewCRL/"+newCRLFileName));
-			os.write(crlbyte);
-			os.flush();		
-			os.close();
-			System.out.println("[Success]"+newCRLFileName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+    	if(crlbyte != null) {
+			OutputStream os = null;
+			try {
+				os = new BufferedOutputStream(
+						new FileOutputStream(NEW_CRL_DIR+newCRLFileName));
+				os.write(crlbyte);
+				os.flush();		
+				os.close();
+				System.out.println("[Success]"+newCRLFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+    	}
 	}
 
 	private byte[] seachCRL(String crlFileName) {
 		String uri = crlFileName.substring(0, crlFileName.indexOf(".crl"));
 		
 		NamingEnumeration<SearchResult> results = null;
+    	SearchControls searchControls = new SearchControls();
+    	searchControls.setSearchScope(SearchControls.OBJECT_SCOPE);
 		try {
-			results = dirContext.search( uri, "(objectclass=*)", searcher);
+			results = dirContext.search( uri, "(objectclass=*)", searchControls);
 		} catch (NamingException e1) {
-			e1.printStackTrace();
+			return null;
 		}
 		byte[] crlbyte = null;
 
@@ -111,8 +106,9 @@ public class SimpleCRLSearcher
 				return null;
 			}
 		} catch (NamingException e) {
-			e.printStackTrace();
+			return null;
 		}	
 		return crlbyte;
 	}
+
 }
