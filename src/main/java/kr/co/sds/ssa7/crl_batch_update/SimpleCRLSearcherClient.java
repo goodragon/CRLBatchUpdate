@@ -2,17 +2,25 @@ package kr.co.sds.ssa7.crl_batch_update;
 
 import java.util.Calendar;
 
-public class SimpleCRLSearcherClient {
+public class SimpleCRLSearcherClient extends Thread {
 
-	public static void main( String[] args )
+	String fileNamePattern;
+	String initialDirContext;
+	
+	
+	public SimpleCRLSearcherClient(String fileNamePattern, String initialDirContext) {
+		this.fileNamePattern = fileNamePattern;
+		this.initialDirContext = initialDirContext;
+	}
+	
+	public void run()
     {
     	long startTime = System.currentTimeMillis();
 
     	SimpleCRLSearcher simpleCRLSearcher = new SimpleCRLSearcher();
     	
-    	//TradeSign Test
-    	simpleCRLSearcher.setCRLFileList(".*o=yessign.*");
-    	simpleCRLSearcher.setInitialDirContext("ds.yessign.or.kr");
+    	simpleCRLSearcher.setCRLFileList(fileNamePattern);
+    	simpleCRLSearcher.setInitialDirContext(initialDirContext);
 		
 		simpleCRLSearcher.updateCRL();
 
