@@ -7,5 +7,6 @@ public class SimpleCRLMain {
 		new SimpleCRLSearcherClient(".*o=KICA.*", "ldap.signgate.com").start();
 		// CrossCert
 		new SimpleCRLSearcherClient(".*o=CrossCert.*", "dir.crosscert.com").start();
+		// ETC
 	}
 }
