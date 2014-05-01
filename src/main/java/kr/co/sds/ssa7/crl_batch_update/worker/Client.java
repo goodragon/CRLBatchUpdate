@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import javax.naming.directory.SearchControls;
 
 public class Client extends Thread {
+	
 	private SearcherPool searcherPool;
 	private String filter;
 	private SearchControls searchControls;
