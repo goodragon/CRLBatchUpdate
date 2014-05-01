@@ -4,13 +4,18 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.regex.Pattern;
 
+import javax.naming.directory.SearchControls;
+
 public class Client extends Thread {
 	private SearcherPool searcherPool;
 	private String filter;
+	private SearchControls searchControls;
 	
 	public Client(SearcherPool seacherPool, String filter){
 		this.searcherPool = seacherPool;
-		this.filter = filter;	
+		this.filter = filter;
+		searchControls = new SearchControls();
+		searchControls.setSearchScope(SearchControls.OBJECT_SCOPE);
 	}
 	
 	public void run(){
@@ -25,7 +30,7 @@ public class Client extends Thread {
 		});
 		
 		for(String fileName : fileNames){
-			Search search = new Search(fileName);
+			Search search = new Search(fileName, searchControls);
 			searcherPool.putSearchCRL(search);
 		}
 		

@@ -17,10 +17,9 @@ public class Search {
 	private SearchControls searchControls;
 
 
-	public Search(String fileName) {
+	public Search(String fileName, SearchControls searchControls) {
 		this.uri = fileName.substring(0, fileName.indexOf(".crl"));
-		searchControls = new SearchControls();
-		searchControls.setSearchScope(SearchControls.OBJECT_SCOPE);
+		this.searchControls = searchControls;
 	}
 	
 	public void execute(DirContext context) {
@@ -33,10 +32,11 @@ public class Search {
 				SearchResult result = results.next();
 				Attributes attrs = result.getAttributes();
 				try {
-				crlbyte = (byte[]) attrs.get("certificateRevocationList").get();
+					crlbyte = (byte[]) attrs.get("certificateRevocationList").get();
 				} catch(NullPointerException e) {
 					crlbyte = (byte[]) attrs.get("certificateRevocationList;binary").get();
 				}
+				
 				if ((crlbyte == null) || (crlbyte.length == 0)) {
 					System.out.println("["+uri+"] CRL Object not exist");
 					return;

@@ -13,9 +13,11 @@ public class CRLBatchUpdate {
 		try {
 			properties.load(new FileInputStream("LDAP.prop"));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("LDAP.prop 파일이 존재하지 않습니다.");
+			return;
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("LDAP.prp 파일 read 중 IOException이 발생했습니다.");
+			return;
 		}
 		
 		Iterator<String> iterator = properties.stringPropertyNames().iterator();
