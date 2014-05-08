@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Properties;
 
-public class CRLBatchUpdate {
+public class WorkerCRLMain {
 
 	public static void main(String[] args) {
 		Properties properties = new Properties();
