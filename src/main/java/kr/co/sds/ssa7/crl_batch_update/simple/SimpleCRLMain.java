@@ -1,7 +1,5 @@
-package kr.co.sds.ssa7.crl_batch_update;
+package kr.co.sds.ssa7.crl_batch_update.simple;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class SimpleCRLMain {
 
