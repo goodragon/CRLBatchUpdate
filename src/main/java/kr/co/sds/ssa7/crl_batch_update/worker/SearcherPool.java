@@ -76,7 +76,7 @@ public class SearcherPool {
 		return search;
 	}
 	
-    public synchronized void completeClient(){
+    public void completeClient(){
     	this.clientCount--;
     }
 
