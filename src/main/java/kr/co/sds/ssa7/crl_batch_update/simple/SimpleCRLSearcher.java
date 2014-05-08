@@ -52,7 +52,7 @@ public class SimpleCRLSearcher
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("["+url+"] Connection complete");
 	}
 
 

@@ -54,7 +54,7 @@ public class AsisCRLSearcher
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Connection!!");
+		System.out.println("["+url+"] Connection complete");
 		return dirContext;
 	}
 	

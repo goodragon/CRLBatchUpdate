@@ -5,7 +5,7 @@ public class SimpleCRLMain {
 
 	public static void main(String[] args) {
 		// 1.GPKI1 50개
-		new SimpleCRLSearcherClient(".*cn=CA1310[0-9]{5},ou=GPKI.*", "ldap.gcc.go.kr").start();
+//		new SimpleCRLSearcherClient(".*cn=CA1310[0-9]{5},ou=GPKI.*", "ldap.gcc.go.kr").start();
 		// 2.GPKI2 50개
 		new SimpleCRLSearcherClient(".*cn=CA1311[0-9]{5},ou=GPKI.*", "cen.dir.go.kr").start();
 		// 3.EPKI 잠실에서는 막혀있음
