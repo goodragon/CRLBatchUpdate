@@ -1,8 +1,8 @@
 ldap.gcc.go.kr=.*cn=CA1310[0-9]{5},ou=GPKI.*
 cen.dir.go.kr=.*cn=CA1311[0-9]{5},ou=GPKI.*
-ldap.epki.go.kr=.*ou=CRL,ou=GPKI.*
-ldap.spo.go.kr=.*ou=crldp[0-9],ou=GPKI.*
-ldap.scourt.go.kr=.*CN=CA9740[0-9]{5},OU=GPKI.*
+#ldap.epki.go.kr=.*ou=CRL,ou=GPKI.*
+#ldap.spo.go.kr=.*ou=crldp[0-9],ou=GPKI.*
+#ldap.scourt.go.kr=.*CN=CA9740[0-9]{5},OU=GPKI.*
 ds.yessign.or.kr=.*o=yessign.*
 dir.signkorea.com=.*o=SignKorea.*
 ldap.tradesign.net=.*o=TradeSign.*

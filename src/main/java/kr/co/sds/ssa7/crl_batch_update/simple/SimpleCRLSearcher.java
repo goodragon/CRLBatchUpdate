@@ -20,23 +20,25 @@ import javax.naming.directory.SearchResult;
 
 public class SimpleCRLSearcher 
 {
-	final String OLD_CRL_DIR = "D:/CRL/OldCRL/";
-	final String NEW_CRL_DIR = "D:/CRL/NewCRL/";
+	final String OLD_CRL_DIR = "C:/CRL/SampleCRL/";
+	final String NEW_CRL_DIR = "C:/CRL/NewCRL/";
 	
 	DirContext dirContext;
 	String[] crlFileList;
-	
+
 	public void setCRLFileList(final String regexPattern) {
 		crlFileList = new File(OLD_CRL_DIR).list(
 				new FilenameFilter(){
 			Pattern pattern = Pattern.compile(regexPattern);
-			
+
+
 			public boolean accept(File arg0, String filename) {
 				return pattern.matcher(filename).matches();
 			}
 		});
 	}
-	
+
+
 	public void setInitialDirContext(String url) {
     	String path = String.format("LDAP://%s/", url);
     	Hashtable<String, String> properties = new Hashtable<String, String>();
@@ -44,20 +46,25 @@ public class SimpleCRLSearcher
 				"com.sun.jndi.ldap.LdapCtxFactory");
 		properties.put(Context.PROVIDER_URL, path);
 		properties.put(Context.SECURITY_AUTHENTICATION, "none");	
+		
 		try {
 			dirContext = new InitialDirContext(properties);
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
+		
 	}
-	
+
+
     public void updateCRL() {
+
 
     	for(String crlFileName : crlFileList) {
     		saveNewCRL(seachCRL(crlFileName), crlFileName);
     	}
 	}
-	
+
+
     private void saveNewCRL(byte[] crlbyte, String newCRLFileName) {
     	if(crlbyte != null) {
 			OutputStream os = null;
@@ -74,23 +81,29 @@ public class SimpleCRLSearcher
     	}
 	}
 
+
 	private byte[] seachCRL(String crlFileName) {
 		String uri = crlFileName.substring(0, crlFileName.indexOf(".crl"));
-		
+
+
 		NamingEnumeration<SearchResult> results = null;
     	SearchControls searchControls = new SearchControls();
     	searchControls.setSearchScope(SearchControls.OBJECT_SCOPE);
+    	
 		try {
 			results = dirContext.search( uri, "(objectclass=*)", searchControls);
 		} catch (NamingException e1) {
 			return null;
 		}
+		
 		byte[] crlbyte = null;
+
 
 		try {
 			if (results.hasMore()) {
 				SearchResult result = results.next();
-				
+
+
 				Attributes attrs = result.getAttributes();
 				try {
 					crlbyte = (byte[]) attrs.get("certificateRevocationList").get();
@@ -108,7 +121,7 @@ public class SimpleCRLSearcher
 		} catch (NamingException e) {
 			return null;
 		}	
+		
 		return crlbyte;
 	}
-
 }

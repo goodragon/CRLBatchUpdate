@@ -11,7 +11,7 @@ public class CRLBatchUpdate {
 	public static void main(String[] args) {
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileInputStream("LDAP.prop"));
+			properties.load(new FileInputStream("C:/CRL/LDAP.prop"));
 		} catch (FileNotFoundException e) {
 			System.out.println("LDAP.prop 파일이 존재하지 않습니다.");
 			return;

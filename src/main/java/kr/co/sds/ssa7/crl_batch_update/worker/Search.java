@@ -57,7 +57,7 @@ public class Search {
 		OutputStream os = null;
 		try {
 			os = new BufferedOutputStream(
-					new FileOutputStream("D:/CRL/NewCRL/"+uri+".crl"));
+					new FileOutputStream("C:/CRL/NewCRL/"+uri+".crl"));
 			os.write(crlbyte);
 			os.flush();		
 			os.close();

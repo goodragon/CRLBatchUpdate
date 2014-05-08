@@ -21,7 +21,7 @@ public class Client extends Thread {
 	
 	public void run(){
 	
-		String[] fileNames = new File("D:/CRL/OldCRL/").list(
+		String[] fileNames = new File("C:/CRL/SampleCRL/").list(
 				new FilenameFilter(){
 			Pattern pattern = Pattern.compile(filter);
 			
